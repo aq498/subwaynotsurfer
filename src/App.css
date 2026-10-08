@@ -1,0 +1,280 @@
+#root {
+  min-height: 100vh;
+}
+
+.font-pixel {
+  font-family: "Press Start 2P", "Courier New", monospace;
+  letter-spacing: 0.02em;
+}
+
+.image-rendering-pixelated {
+  image-rendering: pixelated;
+}
+
+.game-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  max-width: 620px;
+  height: clamp(560px, 76vh, 780px);
+  margin: 0 auto;
+  border: 3px solid #11193b;
+  background: #11193b;
+  box-shadow: 8px 8px 0 #11193b;
+  touch-action: none;
+  user-select: none;
+}
+
+.game-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(250, 249, 234, 0.055) 0,
+      rgba(250, 249, 234, 0.055) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  mix-blend-mode: overlay;
+}
+
+.game-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.game-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.08);
+}
+
+.photo-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(17, 25, 59, 0.76), rgba(17, 25, 59, 0.04) 55%),
+    radial-gradient(circle at 50% 18%, rgba(255, 223, 43, 0.2), transparent 34%);
+}
+
+.screen-panel {
+  animation: screen-slide-in 0.2s ease-in-out both;
+}
+
+.screen-panel.out {
+  animation: screen-slide-out 0.2s ease-in-out both;
+}
+
+.sticker-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border: 2px solid #11193b;
+  background: #ffdf2b;
+  color: #11193b;
+  box-shadow: 4px 4px 0 #11193b;
+  padding: 0 12px;
+  text-transform: uppercase;
+}
+
+.hud-chip {
+  border: 2px solid rgba(250, 249, 234, 0.9);
+  background: rgba(17, 25, 59, 0.74);
+  color: #faf9ea;
+  box-shadow: 3px 3px 0 rgba(17, 25, 59, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+.hud-number {
+  color: #ffdf2b;
+  text-shadow: 2px 2px 0 #11193b;
+}
+
+.objective-meter {
+  overflow: hidden;
+  border: 2px solid #faf9ea;
+  background: rgba(17, 25, 59, 0.72);
+  box-shadow: inset 0 0 0 2px rgba(17, 25, 59, 0.4);
+}
+
+.objective-meter > div {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffdf2b 0,
+    #ffdf2b 8px,
+    #feadd2 8px,
+    #feadd2 16px
+  );
+  transition: width 120ms linear;
+}
+
+.lane-button {
+  min-width: 64px;
+  min-height: 56px;
+  border: 3px solid #11193b;
+  background: #ffdf2b;
+  color: #11193b;
+  box-shadow: 5px 5px 0 #11193b;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 20px;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.lane-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 #11193b;
+}
+
+.runup-sprite {
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  z-index: 5;
+  width: min(42%, 240px);
+  image-rendering: pixelated;
+  transform: translateX(-50%) scale(1.18);
+  animation: run-to-class 2.9s cubic-bezier(0.24, 0.72, 0.22, 1) forwards;
+  filter: drop-shadow(0 18px 0 rgba(17, 25, 59, 0.28));
+}
+
+.speed-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(100deg, transparent 0 38%, rgba(250, 249, 234, 0.38) 39%, transparent 41%),
+    linear-gradient(80deg, transparent 0 58%, rgba(255, 223, 43, 0.34) 59%, transparent 61%),
+    linear-gradient(96deg, transparent 0 72%, rgba(254, 173, 210, 0.32) 73%, transparent 75%);
+  animation: lines-pulse 0.42s linear infinite;
+}
+
+.result-photo {
+  image-rendering: pixelated;
+}
+
+.marquee-strip {
+  overflow: hidden;
+  white-space: nowrap;
+  border-block: 2px solid #11193b;
+  background: #ffdf2b;
+  color: #11193b;
+}
+
+.marquee-strip span {
+  display: inline-block;
+  min-width: 100%;
+  padding-inline-start: 100%;
+  animation: school-marquee 18s linear infinite;
+}
+
+.auth-dot {
+  width: 10px;
+  height: 10px;
+  background: #2dd46f;
+  border: 2px solid #11193b;
+  box-shadow: 2px 2px 0 #11193b;
+}
+
+@keyframes screen-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes screen-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+}
+
+@keyframes run-to-class {
+  0% {
+    bottom: -9%;
+    transform: translateX(-50%) scale(1.22) rotate(-2deg);
+    filter: drop-shadow(0 20px 0 rgba(17, 25, 59, 0.28));
+  }
+  22% {
+    transform: translateX(-50%) scale(1.02) rotate(2deg);
+  }
+  45% {
+    transform: translateX(-50%) scale(0.82) rotate(-2deg);
+  }
+  70% {
+    transform: translateX(-50%) scale(0.58) rotate(2deg);
+  }
+  100% {
+    bottom: 84%;
+    transform: translateX(-50%) scale(0.34) rotate(0deg);
+    filter: drop-shadow(0 4px 0 rgba(17, 25, 59, 0.22));
+  }
+}
+
+@keyframes lines-pulse {
+  from {
+    opacity: 0.18;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 0.52;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes school-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (max-width: 640px) {
+  .game-stage {
+    height: min(68vh, 620px);
+    min-height: 500px;
+    border-width: 2px;
+    box-shadow: 5px 5px 0 #11193b;
+  }
+
+  .lane-button {
+    min-width: 58px;
+    min-height: 52px;
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-panel,
+  .runup-sprite,
+  .speed-lines,
+  .marquee-strip span {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
